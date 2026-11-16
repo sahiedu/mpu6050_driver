@@ -9,7 +9,7 @@ with wheel odometry in `robot_localization`.
 ## 1. Wiring
 
 <!-- Wiring image: save it as docs/wiring.png -->
-![MPU6050 wiring to the Raspberry Pi](docs/wiring.png)
+<img src="docs/wiring.png" alt="MPU6050 wiring to the Raspberry Pi" width="500">
 
 | MPU6050 (GY-521) | Raspberry Pi pin |
 |---|---|
