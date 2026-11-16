@@ -1,0 +1,40 @@
+# Parameters for the mpu6050_driver node.
+# "/**" applies them to the node whatever name it is launched with.
+/**:
+  ros__parameters:
+    # ---- Connection --------------------------------------------------------
+    i2c_bus: "/dev/i2c-1"     # Raspberry Pi header pins 3 (SDA) and 5 (SCL)
+    i2c_address: 104          # 104 = 0x68 (AD0 low/unconnected), 105 = 0x69 (AD0 high)
+
+    # ---- Output ------------------------------------------------------------
+    frame_id: "imu_link"      # publish a static TF base_link -> imu_link (see README)
+    publish_rate: 100.0       # [Hz], topic imu/data_raw
+    publish_temperature: true # topic imu/temperature, about 1 Hz
+
+    # ---- Sensor configuration ---------------------------------------------
+    # gyro_range:  0 = +-250 deg/s (best resolution for ground robots), 1 = 500, 2 = 1000, 3 = 2000
+    gyro_range: 0
+    # accel_range: 0 = +-2 g, 1 = 4 g, 2 = 8 g, 3 = 16 g
+    accel_range: 0
+    # dlpf (digital low-pass filter): 0 = 260 Hz (noisy), 1 = 184, 2 = 94,
+    #   3 = 44 Hz (good default at 100 Hz), 4 = 21, 5 = 10, 6 = 5 Hz (adds delay)
+    dlpf: 3
+    # clock_source: 0 = internal 8 MHz oscillator, 1 = PLL with gyro X reference (recommended)
+    clock_source: 1
+
+    # ---- Gyro bias calibration at startup ----------------------------------
+    calibrate_gyro_on_startup: true
+    calibration_duration: 2.0         # [s] the robot must stay still
+    calibration_max_gyro_stddev: 0.02 # [rad/s] above this the robot is considered moving
+    calibration_max_attempts: 5       # then fall back to gyro_bias below
+
+    # ---- Biases (from: ros2 run mpu6050_driver mpu6050_calibrate) ----------
+    gyro_bias: [0.0, 0.0, 0.0]        # [rad/s], fallback if startup calibration fails
+    accel_bias: [0.0, 0.0, 0.0]       # [m/s^2], gravity is NOT removed
+
+    # ---- Covariances reported to the EKF (must be > 0) ---------------------
+    angular_velocity_stddev: 0.01     # [rad/s]
+    linear_acceleration_stddev: 0.1   # [m/s^2]
+
+    # ---- Error handling ----------------------------------------------------
+    max_consecutive_errors: 10        # failed reads in a row before re-initializing the sensor

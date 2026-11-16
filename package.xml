@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>mpu6050_driver</name>
+  <version>1.0.0</version>
+  <description>
+    ROS 2 driver for the MPU6050 IMU over Linux I2C (Raspberry Pi). Publishes
+    sensor_msgs/Imu with startup gyro-bias calibration, realistic covariances
+    and robust error handling. Based on kimsniper/ros2_mpu6050.
+  </description>
+  <maintainer email="maintainer@example.com">mpu6050_driver maintainer</maintainer>
+  <license>BSD-3-Clause</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_srvs</depend>
+  <!-- Provides i2c/smbus.h and libi2c (rosdep installs it with apt) -->
+  <depend>libi2c-dev</depend>
+
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
